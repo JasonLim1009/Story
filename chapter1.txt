@@ -8,6 +8,9 @@ git log
 git diff chapter3.txt  (返回上次保存history)
 git checkout chapter3.txt  (恢复上次保存的history)
 
+
+
+//254
 ls
 touch chapter1.txt
 open chapter1.txt
@@ -17,7 +20,28 @@ git init
 git status
 git add .
 git status
+git commit -m "Complete Chapter 1"
+git log
+touch chapter2.txt
+touch chapter3.txt
+open chapter3.txt
+git status
+git add .
+git status
+git commit -m "Complete Chapter 2 and 3"
+git log
+
+Working Directory(git add) ---> Staging Area (git commit) ---> Local Repository
+back here<-----------------------------------------------------(git checkout)
+
+git diff chapter3.txt
+git checkout chapter3.txt
 
 
 
+//255
+git remote add origin https://github.com/JasonLim1009/Story.git
+git push -u origin master
+
+Working Directory --- Staging Area --- Local Repository[git](git push) ---> Remote Respository[GitHub]
 
