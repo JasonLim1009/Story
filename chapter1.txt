@@ -7,3 +7,17 @@ git commit -m "Complete Chapter 3"
 git log
 git diff chapter3.txt  (返回上次保存history)
 git checkout chapter3.txt  (恢复上次保存的history)
+
+ls
+touch chapter1.txt
+open chapter1.txt
+vim chapter1.txt
+open chapter1.txt
+git init
+git status
+git add .
+git status
+
+
+
+
