@@ -1,5 +1,7 @@
 It was the best of space, it was the worst of space.
 
+It was the best of times, it was the worst of times.
+
 ls -a  (文件位置)
 git status  (查看文件状态)
 git add .  (提交在临时保存区)
