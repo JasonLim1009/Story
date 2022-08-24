@@ -1,0 +1,36 @@
+//259 分支与合并
+git log
+git branch alien-plot (指定新分支的名称)
+git branch (查看有哪些分支)
+git checkout alien-plot (master切换到alien-plot)
+git add .
+git commit -m 'modify chapter 1 and 2 to have alien theme'
+git log
+git branch
+git checkout master (alien-plot切换到master)
+touch chapter4.txt
+open chapter4.txt
+git add .
+git commit -m 'chapter 4' (***git commit -m是添加去github的列表)
+git checkout alien-plot (master切换到alien-plot)
+git checkout master (alien-plot切换到master)
+git merge alien-plot (要合拼alien-plot分支中的更改)
+:q! (退出)
+git branch
+git log
+git push origin master -u (***上传并更改github内容)
+
+
+
+git add . (添加)
+git status (查看状态)
+git commit -m 'chapter 4' (git commit -m是添加去github的列表)
+git push origin master -u (上传并更改github内容)
+
+
+
+
+
+
+
+
