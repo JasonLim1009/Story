@@ -42,3 +42,31 @@ Comfirm merge
 Insights
 Graphs
 Network
+
+
+
+My Computer ********************************************************************************
+Working Directory(git add) ---> Staging Area(git commit) ---> My Local Repository(git push)* ---> My Remote Repository
+                         <-----------------------------------------------------------------* ----(git pull)
+                         <-----------------------------------(git checkout)                *
+********************************************************************************************   *        |        [*]
+                                                                                             *          |         |
+                                                                                           *            |         |
+                                                                                         *              |         |
+                                                                                       *                |         |
+                                                                                 (git clone)         (fork)  (pull request)
+                                                                                   *                    |         |
+                                                                                 *                      |         |
+                                                                               *                        |         |
+                                                                             *                          |         |
+Another Person's Computer ************************************************[*]***************           [*]        |
+                                          Another Person's Local Repository <--------------* (git fetch)Another Person's Remote Repository
+********************************************************************************************
+
+
+
+
+
+
+
+
