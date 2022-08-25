@@ -2,3 +2,43 @@ It was the time of excess, it was the time of frugality.
 
 
 You can do it!
+
+----------------
+It was the time of UFOs, it was the time of little green men.
+
+
+----------------Jason----------------------------|----------------------luis------------------------
+Local Repository --- Remote Repository(Fork) ----|-----> Remote Repository -------- Local Repository
+------------------------------------------- <----|-- (merge) <--(pull request) <--- (git push)
+
+(luis)
+Fork
+   - change chapter4.txt
+   - Commit directly to the master branch.
+   *Commit changes
+Insights
+Graphs
+Network
+Code
+   - New pull request
+   - Create pull request
+       - Leave a comment
+       *Create pull request
+    
+<---------------------------> 
+(Jason)
+Pull requests
+Conversation
+   - 1 Open
+   Commits
+   - 比较Commits
+        - Review changes
+        - Leave a comment
+        Approve
+        *Submit Review
+Merge pull request
+Leave a comment
+Comfirm merge
+Insights
+Graphs
+Network
