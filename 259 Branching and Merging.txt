@@ -32,8 +32,12 @@ git commit -m 'chapter 4' (git commit -m是添加去github的列表)
 git push origin master -u (上传并更改github内容)
 
 
-
-
+(main)--->(master)
+git checkout main
+- branch main to branch master:
+git branch -m master
+- set origin/master to track your local branch master:
+git push -u origin master
 
 
 
