@@ -7,3 +7,4 @@ git config user.email
 
 git log
 git status
+git branch
