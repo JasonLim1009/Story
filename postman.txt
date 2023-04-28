@@ -1,0 +1,55 @@
+post
+http://192.168.0.23:8080/React_web/get_employess?
+
+post
+http://192.168.0.23:8080/React_web/insert_new_employee?
+
+get
+http://192.168.0.23:8080/React_web/get_employeemaster?site_cd=AFBT&page=1&pageSize=1
+
+get
+http://192.168.0.23:8080/React_web/get_emp_det_test?site_cd=AFBT&page=1&pageSize=20
+
+post
+http://192.168.0.23:8080/React_web/update_employee?
+
+get
+http://192.168.0.23:8080/React_web/get_workrequestmaster?
+
+get
+http://192.168.0.34:8080/React_web/get_sitecode.php
+
+get
+http://192.168.0.34:8080/React_web/get_workordermaster?site_cd=AFPK&page=1&pageSize=10
+
+get
+http://192.168.0.34:8080/React_web/get_workordermaster_select?site_cd=AFPK&RowID=86
+(use postman must + site_cd + RowID)
+
+get
+http://192.168.0.34:8080/React_web/get_dropdown.php?site_cd=AFPK&type=All
+
+get
+http://192.168.0.34:8080/React_web/insert_new_workorder.php?
+(copy website console data)
+(click Params --> Body --> raw --> paste website console data --> JSON --> send)
+
+get
+http://192.168.0.34:8080/React_web/authenticate_login.php?site_cd=RFI&login_id=demo&password=demo
+
+get
+http://192.168.0.34:8080/React_web/get_dropdown.php?site_cd=AFPK&type=WKO_Status
+(sort list A-Z 1-9)
+(click Profiler scan and copy code to SQLQery)
+(+ order by wrk_sts_status ASC )  desc / asc
+
+get
+http://192.168.0.34:8080/React_web/get_workordermaster_statusaudit.php?site_cd=CPI&wko_sts_wo_no=CWO100001&RowID=10023
+
+
+
+
+
+
+
+

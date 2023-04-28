@@ -1,0 +1,56 @@
+select	emp_mst.site_cd, emp_mst.emp_mst_name, emp_det.emp_det_email_id 
+from		emp_mst, emp_det
+where		emp_mst.site_cd = emp_det.site_cd
+AND		emp_mst.rowid = emp_det.mst_rowid
+AND		emp_mst.emp_mst_empl_id ='demo'
+AND		emp_mst.site_cd = 'AFPK'
+
+SP_HELP emp_mst
+SP_HELP emp_det
+
+select * from emp_mst where site_cd ='AFBT' and emp_mst_empl_id='DEMO'
+
+delete from emp_mst where site_cd= 'AFBT'  and emp_mst_empl_id='DEMO'
+
+
+select	emp_mst.site_cd ,emp_mst.emp_mst_title, emp_det.mst_RowID
+from		emp_mst, emp_det
+where		emp_mst.site_cd = emp_det.site_cd
+and		emp_mst.rowid = emp_det.mst_rowid
+and		emp_mst.emp_mst_empl_id = 'demo'
+and		emp_mst.site_cd = 'AFBT'
+
+
+
+SELECT * FROM cnt_mst
+
+
+select * from wko_det order by rowid desc
+
+
+**********************************************
+
+select rowid, * from wko_mst order by wko_mst.rowid desc
+
+select rowid, * from wko_det order by wko_det.rowid desc
+
+
+update wko_mst SET wko_mst_status = 'OPE' where rowid = 10136
+
+
+**********************************************
+
+select customize_label  from cf_label (NOLOCK) where column_name ='wko_ls3_assetno' and language_cd ='DEFAULT'
+
+select customize_label  from cf_label (NOLOCK) where column_name ='wko_ls3_activity_code,' and language_cd ='DEFAULT'
+
+select * from cf_label where language_cd ='DEFAULT' and table_name ='wko_ls3' and column_name ='wko_ls3_assetno' 
+
+
+
+select *  from cf_label (NOLOCK) where   language_cd ='DEFAULT' and table_name='wko_ls8'
+
+
+
+
+

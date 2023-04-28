@@ -1,0 +1,3305 @@
+import React, { useState, useEffect } from "react";
+import { Form } from "react-bootstrap";
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
+import APIServices from "../services/APIServices";
+import Swal from "sweetalert2/dist/sweetalert2.js";
+import "sweetalert2/src/sweetalert2.scss";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import Select from "react-select";
+import { Modal, Button } from "react-bootstrap";
+import { useLocation } from "react-router-dom";
+import Moment from "moment";
+import AliceCarousel from "react-alice-carousel";
+import "react-alice-carousel/lib/alice-carousel.css";
+import { useHistory } from "react-router-dom";
+import {
+  useTable,
+  useSortBy,
+  usePagination,
+  useRowSelect,
+  useResizeColumns,
+} from "react-table";
+
+const WorkRequestForm = (props) => {
+
+  const history = useHistory();
+  const [validated, setValidated] = useState(false);
+
+  const handleDragStart = (e) => e.preventDefault();
+
+  const items = [
+    <img
+      src="../../assets/images/product_images_2/thumb_image1.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image2.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image3.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image4.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image5.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image6.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image7.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image8.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image9.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image10.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image11.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/product_images_2/thumb_image12.jpg"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+    <img
+      src="../../assets/images/logo.png"
+      onDragStart={handleDragStart}
+      role="presentation"
+    />,
+  ];
+
+  const location = useLocation();
+
+  const [Button_save, setButton_save] = useState("");
+  const [RowID, setRowID] = useState("");
+
+  const [AssetNo, setAssetNo] = useState("");
+  const [AssetNo_disabled, setAssetNo_disabled] = useState(false);
+
+  const [WorkRequestNo, setWorkRequestNo] = useState("");
+  const [WorkRequestNo_disabled, setWorkRequestNo_disabled] = useState(false);
+
+  const [selected_AssetLocation, setSelected_AssetLocation] = useState([]); 
+  const [AssetLocation, setAssetLocation] = useState([]); 
+
+  const [selected_AssetLevel, setSelected_AssetLevel] = useState([]); 
+  const [AssetLevel, setAssetLevel] = useState([]); 
+
+  const [selected_Priority, setSelected_Priority] = useState([]); 
+  const [Priority, setPriority] = useState([]); 
+
+  const [selected_WorkGroup, setSelected_WorkGroup] = useState([]); 
+  const [WorkGroup, setWorkGroup] = useState([]); 
+
+  const [selected_WorkArea, setSelected_WorkArea] = useState([]); 
+  const [WorkArea, setWorkArea] = useState([]); 
+
+  const [selected_WorkClass, setSelected_WorkClass] = useState([]); 
+  const [WorkClass, setWorkClass] = useState([]); 
+
+  const [selected_WorkType, setSelected_WorkType] = useState([]); 
+  const [WorkType, setWorkType] = useState([]); 
+
+  const [selected_CustomerCode, setSelected_CustomerCode] = useState([]); 
+  const [CustomerCode, setCustomerCode] = useState([]); 
+
+  const [selected_FaultCode, setSelected_FaultCode] = useState([]); 
+  const [FaultCode, setFaultCode] = useState([]); 
+
+  const [selected_CostCenter, setSelected_CostCenter] = useState([]); 
+  const [CostCenter, setCostCenter] = useState([]);
+
+  const [OriginateDate, setOriginateDate] = useState("");
+  const [DueDate, setDueDate] = useState("");
+
+  const [ProjectID, setProjectID] = useState("");
+  const [PhoneNo, setPhoneNo] = useState("");
+
+  const [Requestor, setRequestor] = useState("");
+
+  const [Description, setDescription] = useState("");
+
+
+  const [selected_AssetGroupCode, setselected_AssetGroupCode] = useState();
+  const [AssetGroupCode, setAssetGroupCode] = useState([]);
+  const [filteredDataSource, setFilteredDataSource] = React.useState([]);
+
+
+  const [ParentFlag, setParentFlag] = useState(false);
+  const [selected_ParentFlag, setselected_ParentFlag] = useState("");
+  const [columns, setcolumns] = useState([]);
+  const [data, setdata] = useState([]);
+
+  const [UDFText_1, setUDFText_1] = useState("");
+  const [UDFText_3, setUDFText_3] = useState("");
+  const [UDFText_2, setUDFText_2] = useState("");
+  const [UDFText_4, setUDFText_4] = useState("");
+  const [UDFText_5, setUDFText_5] = useState("");
+  const [UDFText_6, setUDFText_6] = useState("");
+  const [UDFText_7, setUDFText_7] = useState("");
+  const [UDFText_8, setUDFText_8] = useState("");
+  const [UDFText_9, setUDFText_9] = useState("");
+  const [UDFText_10, setUDFText_10] = useState("");
+
+  const [UDFText_11, setUDFText_11] = useState("");
+  const [UDFText_13, setUDFText_13] = useState("");
+  const [UDFText_12, setUDFText_12] = useState("");
+  const [UDFText_14, setUDFText_14] = useState("");
+  const [UDFText_15, setUDFText_15] = useState("");
+  const [UDFText_16, setUDFText_16] = useState("");
+  const [UDFText_17, setUDFText_17] = useState("");
+  const [UDFText_18, setUDFText_18] = useState("");
+  const [UDFText_19, setUDFText_19] = useState("");
+  const [UDFText_20, setUDFText_20] = useState("");
+
+  const [UDFNumber_1, setUDFNumber_1] = useState("");
+  const [UDFNumber_2, setUDFNumber_2] = useState("");
+  const [UDFNumber_3, setUDFNumber_3] = useState("");
+  const [UDFNumber_4, setUDFNumber_4] = useState("");
+  const [UDFNumber_5, setUDFNumber_5] = useState("");
+  const [UDFNumber_6, setUDFNumber_6] = useState("");
+  const [UDFNumber_7, setUDFNumber_7] = useState("");
+  const [UDFNumber_8, setUDFNumber_8] = useState("");
+  const [UDFNumber_9, setUDFNumber_9] = useState("");
+  const [UDFNumber_10, setUDFNumber_10] = useState("");
+
+  const [UDFNumber_11, setUDFNumber_11] = useState("");
+  const [UDFNumber_12, setUDFNumber_12] = useState("");
+  const [UDFNumber_13, setUDFNumber_13] = useState("");
+  const [UDFNumber_14, setUDFNumber_14] = useState("");
+  const [UDFNumber_15, setUDFNumber_15] = useState("");
+  const [UDFNumber_16, setUDFNumber_16] = useState("");
+  const [UDFNumber_17, setUDFNumber_17] = useState("");
+  const [UDFNumber_18, setUDFNumber_18] = useState("");
+  const [UDFNumber_19, setUDFNumber_19] = useState("");
+  const [UDFNumber_20, setUDFNumber_20] = useState("");
+
+  const [UDFDate_1, setUDFDate_1] = useState(new Date());
+  const [UDFDate_2, setUDFDate_2] = useState(new Date());
+  const [UDFDate_3, setUDFDate_3] = useState(new Date());
+  const [UDFDate_4, setUDFDate_4] = useState(new Date());
+  const [UDFDate_5, setUDFDate_5] = useState(new Date());
+  const [UDFDate_6, setUDFDate_6] = useState(new Date());
+  const [UDFDate_7, setUDFDate_7] = useState(new Date());
+  const [UDFDate_8, setUDFDate_8] = useState(new Date());
+  const [UDFDate_9, setUDFDate_9] = useState(new Date());
+  const [UDFDate_10, setUDFDate_10] = useState(new Date());
+
+  const [UDFDate_11, setUDFDate_11] = useState(new Date());
+  const [UDFDate_12, setUDFDate_12] = useState(new Date());
+  const [UDFDate_13, setUDFDate_13] = useState(new Date());
+  const [UDFDate_14, setUDFDate_14] = useState(new Date());
+  const [UDFDate_15, setUDFDate_15] = useState(new Date());
+  const [UDFDate_16, setUDFDate_16] = useState(new Date());
+  const [UDFDate_17, setUDFDate_17] = useState(new Date());
+  const [UDFDate_18, setUDFDate_18] = useState(new Date());
+  const [UDFDate_19, setUDFDate_19] = useState(new Date());
+  const [UDFDate_20, setUDFDate_20] = useState(new Date());
+
+  const [UDFNote_1, setUDFNote_1] = useState("");
+  const [UDFNote_2, setUDFNote_2] = useState("");
+
+  const [show, setShow] = useState(false);
+
+  const [ParentFlag_show, setParentFlag_Show] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const ParentFlag_handleClose = () => setParentFlag_Show(false);
+  const ParentFlag_handleShow = () => setParentFlag_Show(true);
+
+  const [AutoNumring, setAutoNumring] = useState("");
+
+
+  //To get the dropdown value
+  const get_asset_Status = (site_ID, type, selected_asset) => {
+    Swal.fire({ title: "Please Wait !", allowOutsideClick: true });
+    Swal.showLoading();
+
+
+    APIServices.get_assetno(site_ID, selected_asset).then((responseJson) => {
+
+      console.log(responseJson.data.data);
+
+      if(responseJson.data.status === "SUCCESS") {
+        setParentFlag(responseJson.data.data.AssetType);
+
+
+        let AssetGroupCode = responseJson.data.data.AssetGroupCode.map(item => ({
+            label: item.ast_mst_asset_no,
+            value: item.ast_mst_asset_shortdesc
+          })
+        );
+        setAssetGroupCode(AssetGroupCode);
+        setFilteredDataSource(AssetGroupCode)
+
+        get_dropdown_ParentFlag(site_ID,selected_asset); 
+
+
+      }else {
+        Swal.close();
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: responseJson.data.message,
+        });
+      }
+
+    })
+
+    .catch((e) => {
+       Swal.close();
+       setParentFlag(e);
+       Swal.fire({
+       icon: "error",
+       title: "Oops get_sitecode...",
+       text: e, //problem here
+      });
+    });
+
+
+
+    APIServices.get_dropdown(site_ID, type).then((responseJson) => {
+        if (responseJson.data.status === "SUCCESS") {
+          setParentFlag(responseJson.data.data.AssetType);
+
+
+            // let AssetGroupCode = responseJson.data.data.AssetGroupCode.map(
+            //   (item) => ({
+            //     label: item.ast_grp_grp_cd,
+            //     value: item.ast_grp_desc,
+            //   })
+            // );
+            // setAssetGroupCode(AssetGroupCode);
+            // setFilteredDataSource(AssetGroupCode);
+
+
+          let CostCenter = responseJson.data.data.CostCenter.map((item) => ({
+            label: item.costcenter + " : " + item.descs,
+            value: item.descs,
+          }));
+          setCostCenter(CostCenter);
+
+
+          let AssetLocation = responseJson.data.data.AssetLocation.map(
+            (item) => ({
+              label: item.ast_loc_ast_loc + " : " + item.ast_loc_desc,
+              value: item.ast_loc_desc,
+            })
+          );
+          setAssetLocation(AssetLocation);
+
+
+          let Priority = responseJson.data.data.Priority.map((item) => ({
+            label:
+              item.wrk_pri_pri_cd +
+              " : " +
+              item.wrk_pri_desc +
+              " : " +
+              item.wrk_pri_due_date_count,
+            value: item.mst_war_desc,
+          }));
+          setPriority(Priority);
+
+
+          let AssetLevel = responseJson.data.data.AssetLevel.map((item) => ({
+            label: item.ast_lvl_ast_lvl + " : " + item.ast_lvl_desc,
+            value: item.ast_lvl_desc,
+          }));
+          setAssetLevel(AssetLevel);
+
+
+          let WorkType = responseJson.data.data.WorkType.map((item) => ({
+            label:
+              item.wrk_typ_typ_cd +
+              " : " +
+              item.wrk_typ_desc +
+              " : " +
+              item.wrk_typ_option +
+              " : " +
+              item.wrk_typ_pm_option,
+            value: item.wrk_typ_desc,
+          }));
+          setWorkType(WorkType);
+
+
+          let WorkClass = responseJson.data.data.WorkClass.map((item) => ({
+            label: item.wrk_cls_cls_cd + " : " + item.wrk_cls_desc,
+            value: item.wrk_cls_desc,
+          }));
+          setWorkClass(WorkClass);
+
+
+          let wrk_group = responseJson.data.data.wrk_group.map((item) => ({
+            label: item.wrk_grp_grp_cd + " : " + item.wrk_grp_desc,
+            value: item.wrk_grp_desc,
+          }));
+          setWorkGroup(wrk_group);
+
+
+          let WorkArea = responseJson.data.data.WorkArea.map((item) => ({
+            label: item.mst_war_work_area + " : " + item.mst_war_desc,
+            value: item.mst_war_desc,
+          }));
+          setWorkArea(WorkArea);
+         
+
+          let CustomerCode = responseJson.data.data.Customer_code.map(
+            (item) => ({
+              label: item.cus_mst_customer_cd + " : " + item.cus_mst_desc,
+              value: item.cus_mst_desc,
+            })
+          );
+          setCustomerCode(CustomerCode);
+
+
+          let FaultCode = responseJson.data.data.FaultCode.map((item) => ({
+            label: item.wrk_flt_fault_cd + " : " + item.wrk_flt_desc,
+            value: item.wrk_flt_desc,
+          }));
+          setFaultCode(FaultCode);
+
+
+          get_dropdown_ParentFlag(site_ID, selected_asset);
+        } else {
+          Swal.close();
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: responseJson.data.message,
+          });
+        }
+      })
+      .catch((e) => {
+        Swal.close();
+        setParentFlag(e);
+        Swal.fire({
+          icon: "error",
+          title: "Oops get_sitecode...",
+          text: e,
+        });
+      });
+  };
+
+
+  //button assignment
+  const get_dropdown_ParentFlag = (site_ID, selected_asset) => {
+    console.log("PARENT FLAG" + site_ID + selected_asset);
+
+    APIServices.get_dropdown_ParentFlag(site_ID, selected_asset).then((responseJson) => {
+        console.log(responseJson.data.status);
+
+        if (responseJson.data.status === "SUCCESS") {
+          setcolumns(responseJson.data.data.header);
+          setdata(responseJson.data.data.result);
+
+          if (selected_asset == "New_WorkRequest") {
+            Swal.close();
+            setButton_save("Save");
+          } else {
+            setButton_save("Update");
+            get_workrequest_select(site_ID);
+          }
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: responseJson.data,
+          });
+        }
+      })
+      .catch((e) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops get_assetmaster_select...",
+          text: e,
+        });
+      });
+  };
+
+
+  // update autofill function
+  const get_workrequest_select = (site_ID) => {
+    // ************************** link RowID location ***************************
+    console.log("SELECT ROWID: " + location.state.RowID);
+
+    APIServices.get_workrequest_select(site_ID, location.state.RowID).then((responseJson) => {
+        if (responseJson.data.status === "SUCCESS") {
+          // **************************************** check read data ******************************************
+          console.log("SELECT EMP: " + JSON.stringify(responseJson.data.data));
+
+          for (var index in responseJson.data.data) {
+            setAssetNo(responseJson.data.data[index].wkr_mst_assetno);
+            setWorkRequestNo(responseJson.data.data[index].wkr_mst_wr_no);
+           
+            setSelected_CostCenter({
+              label:
+                responseJson.data.data[index].wkr_mst_chg_costcenter ,
+                // " : " +
+                // responseJson.data.data[index].desc,
+            });
+
+            setSelected_AssetLocation({
+              label:
+                responseJson.data.data[index].wkr_mst_location ,
+                // " : " +
+                // responseJson.data.data[index].ast_loc_desc,
+            });
+
+            setSelected_Priority({
+              label:
+                responseJson.data.data[index].wkr_mst_orig_priority ,
+                // " : " +
+                // responseJson.data.data[index].wrk_pri_desc +
+                // " : " +
+                // responseJson.data.data[index].wrk_pri_due_date_count,
+            });
+
+
+            setSelected_AssetLevel({
+              label:
+                responseJson.data.data[index].wkr_mst_assetlocn,
+                // " : " +
+                // responseJson.data.data[index].ast_lvl_desc,
+            });
+
+
+          //   if(responseJson.data.data[index].wkr_mst_org_date == null){
+          //     setOriginateDate('')
+          //   }else{
+
+          //     setOriginateDate( Moment(responseJson.data.data[index].wkr_mst_org_date.date).format('YYYY-MM-DDTHH:mm:ss').trim())
+          //     console.log('SELECT HD: '+ Moment(responseJson.data.data[index].wkr_mst_org_date.date).format('YYYY-MM-DDTHH:mm:ss'))
+          // }
+
+          setOriginateDate( responseJson.data.data[index].wkr_mst_org_date )
+
+
+            setSelected_WorkType({
+              label:
+                responseJson.data.data[index].wkr_mst_work_type , 
+                // " : " +
+                // responseJson.data.data[index].wrk_typ_desc +
+                // " : " +
+                // responseJson.data.data[index].wrk_typ_option +
+                // " : " +
+                // responseJson.data.data[index].wrk_typ_pm_option,
+            });
+
+
+            if(responseJson.data.data[index].wkr_mst_due_date == null){
+              setDueDate('')
+            } else {
+
+              setDueDate (Moment(responseJson.data.data[index].wkr_mst_due_date).format('YYYY-MM-DDTHH:mm:ss').trim())
+              console.log('SELECT OD: ' + Moment(responseJson.data.data[index].wkr_mst_due_date).format('YYYY-MM-DDTHH:mm:ss'))
+            }
+
+
+            setSelected_WorkClass({
+              label:
+                responseJson.data.data[index].wkr_mst_work_class ,
+                // " : " +
+                // responseJson.data.data[index].wrk_cls_desc,
+            });
+
+
+            setRequestor(responseJson.data.data[index].wkr_mst_requestor)
+
+
+            setSelected_WorkGroup({
+              label:
+                responseJson.data.data[index].wkr_mst_work_group ,
+                // " : " +
+                // responseJson.data.data[index].wrk_grp_desc,
+            });
+
+            
+            setSelected_WorkArea({
+              label:
+                responseJson.data.data[index].wkr_mst_work_area ,
+                // " : " +
+                // responseJson.data.data[index].mst_war_desc,
+            });
+
+
+            setProjectID(responseJson.data.data[index].wkr_mst_projectid);
+            setPhoneNo(responseJson.data.data[index].wkr_mst_requestor_phone);
+
+            setSelected_CustomerCode({
+              label:
+                responseJson.data.data[index].wkr_det_cus_code ,
+                // " : " +
+                // responseJson.data.data[index].cus_mst_desc,
+            });
+
+
+            setSelected_FaultCode({
+              label:
+                responseJson.data.data[index].wkr_mst_fault_code ,
+                // " : " +
+                // responseJson.data.data[index].wrk_flt_desc,
+            });
+
+
+            setDescription(responseJson.data.data[index].wkr_mst_wr_descs);
+
+            setUDFText_1(responseJson.data.data[index].wkr_det_varchar1);
+            setUDFText_2(responseJson.data.data[index].wkr_det_varchar2);
+            setUDFText_3(responseJson.data.data[index].wkr_det_varchar3);
+            setUDFText_4(responseJson.data.data[index].wkr_det_varchar4);
+            setUDFText_5(responseJson.data.data[index].wkr_det_varchar5);
+            setUDFText_6(responseJson.data.data[index].wkr_det_varchar6);
+            setUDFText_7(responseJson.data.data[index].wkr_det_varchar7);
+            setUDFText_8(responseJson.data.data[index].wkr_det_varchar8);
+            setUDFText_9(responseJson.data.data[index].wkr_det_varchar9);
+            setUDFText_10(responseJson.data.data[index].wkr_det_varchar10);
+
+            setUDFText_11(responseJson.data.data[index].wkr_det_varchar11);
+            setUDFText_12(responseJson.data.data[index].wkr_det_varchar12);
+            setUDFText_13(responseJson.data.data[index].wkr_det_varchar13);
+            setUDFText_14(responseJson.data.data[index].wkr_det_varchar14);
+            setUDFText_15(responseJson.data.data[index].wkr_det_varchar15);
+            setUDFText_16(responseJson.data.data[index].wkr_det_varchar16);
+            setUDFText_17(responseJson.data.data[index].wkr_det_varchar17);
+            setUDFText_18(responseJson.data.data[index].wkr_det_varchar18);
+            setUDFText_19(responseJson.data.data[index].wkr_det_varchar19);
+            setUDFText_20(responseJson.data.data[index].wkr_det_varchar20);
+
+            setUDFNumber_1(responseJson.data.data[index].wkr_det_numeric1);
+            setUDFNumber_2(responseJson.data.data[index].wkr_det_numeric2);
+            setUDFNumber_3(responseJson.data.data[index].wkr_det_numeric3);
+            setUDFNumber_4(responseJson.data.data[index].wkr_det_numeric4);
+            setUDFNumber_5(responseJson.data.data[index].wkr_det_numeric5);
+            setUDFNumber_6(responseJson.data.data[index].wkr_det_numeric6);
+            setUDFNumber_7(responseJson.data.data[index].wkr_det_numeric7);
+            setUDFNumber_8(responseJson.data.data[index].wkr_det_numeric8);
+            setUDFNumber_9(responseJson.data.data[index].wkr_det_numeric9);
+            setUDFNumber_10(responseJson.data.data[index].wkr_det_numeric10);
+
+            setUDFNumber_11(responseJson.data.data[index].wkr_det_numeric11);
+            setUDFNumber_12(responseJson.data.data[index].wkr_det_numeric12);
+            setUDFNumber_13(responseJson.data.data[index].wkr_det_numeric13);
+            setUDFNumber_14(responseJson.data.data[index].wkr_det_numeric14);
+            setUDFNumber_15(responseJson.data.data[index].wkr_det_numeric15);
+            setUDFNumber_16(responseJson.data.data[index].wkr_det_numeric16);
+            setUDFNumber_17(responseJson.data.data[index].wkr_det_numeric17);
+            setUDFNumber_18(responseJson.data.data[index].wkr_det_numeric18);
+            setUDFNumber_19(responseJson.data.data[index].wkr_det_numeric19);
+            setUDFNumber_20(responseJson.data.data[index].wkr_det_numeric20);
+
+            setUDFNote_1(responseJson.data.data[index].ast_det_note1);
+            setUDFNote_2(responseJson.data.data[index].ast_det_note2);
+          }
+
+          Swal.close();
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: responseJson.data,
+          });
+        }
+      })
+      .catch((e) => {
+        setParentFlag(e);
+        Swal.fire({
+          icon: "error",
+          title: "Oops get_employee_select...",
+          text: e,
+        });
+      });
+  };
+
+
+
+
+  const get_assetno = (site_ID) => {
+    console.log("SELECT ROWID: " + location.state.RowID);
+
+    var jsonGroup ={
+      "site_cd": site_ID,
+      // "ast_mst_asset_no",
+    }
+
+
+    APIServices.get_assetno(JSON.stringify(jsonGroup)).then((responseJson) =>{
+
+      if (responseJson.data.status ===  'SUCCESS') {
+        for (var index in responseJson.data.data) {
+
+          setselected_AssetGroupCode( responseJson.data.data[index].ast_mst_asset_no + ":" + responseJson.data.data[index].ast_mst_asset_shortdesc)
+
+        }
+        Swal.close()
+
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'oops...',
+          text: responseJson.data,
+        })
+      }
+    })
+  }
+
+
+
+  useEffect(() => {
+    let site_ID = localStorage.getItem("site_ID");
+    console.log("select EMPID", location.state.RowID);
+
+    setParentFlag("Select" + ":" + location.state.select);
+    get_asset_Status(site_ID, "All", location.state.select);
+    get_assetno(site_ID);
+
+    }, [location]);
+
+
+
+  //Search function
+  const [name, setName] = useState("");
+  const filter = (e) => {
+    const keyword = e.target.value;
+
+    if (keyword !== "") {
+      const results = AssetGroupCode.filter((user) => {
+        const itemData = `${user.label.toUpperCase()}, ,${user.value.toUpperCase()})`;
+        const textData = keyword.toUpperCase();
+
+        return itemData.indexOf(textData) > -1;
+        // return user.label.toLowerCase().startsWith(keyword.toLowerCase());
+        // Use the toLowerCase() method to make it case-insensitive
+      });
+      setFilteredDataSource(results);
+    } else {
+      setFilteredDataSource(AssetGroupCode);
+      // If the text field is empty, show all users
+    }
+    setName(keyword);
+  };
+
+  //console.log(""+":"+name)
+
+  const handleOnChange = () => {
+    setParentFlag(!ParentFlag);
+  };
+
+
+  //Asset Group Code
+  const handleSelect = (e) => {
+    setselected_AssetGroupCode(e);
+    handleClose();
+    //console.log("lkfklsdj"+":"+e);
+    //setSelected({ key, value: event.target.value });
+  };
+
+
+  const onClickChange =()=>{
+
+    if(WorkRequestNo == 0 || WorkRequestNo == null){
+        Swal.fire({
+            icon: 'error',
+            title: 'Please Enter Work Request',
+            showConfirmButton: false,
+            timer: 2000,
+            
+          })
+    }else{
+        if(selected_AssetGroupCode == 0 || selected_AssetGroupCode == null){
+            Swal.fire({
+                icon: 'error',
+                title: 'Please Select the Asset No',
+                showConfirmButton: false,
+                timer: 2000
+                
+              })
+        }else{
+            if(selected_CostCenter == 0 || selected_CostCenter == null){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Please Select the Cost Center ',
+                    showConfirmButton: false,
+                    timer: 2000
+                  })
+            }else{        
+                if(selected_AssetLocation == 0 || selected_AssetLocation == null){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Please Select the Asset Location',
+                        showConfirmButton: false,
+                        timer: 2000
+                        
+                      })
+                }else{
+                    if(selected_Priority == 0 || selected_Priority == null){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Please Select the Original Priority',
+                            showConfirmButton: false,
+                            timer: 2000
+                            
+                          })
+                    }else{
+                        if(selected_AssetLevel == 0 || selected_AssetLevel == null){
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Please Select the Level',
+                              showConfirmButton: false,
+                              timer: 2000
+                              
+                            })
+                      }else{
+                          if(selected_WorkType == 0 || selected_WorkType == null){
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Please Select the Work Type',
+                                showConfirmButton: false,
+                                timer: 2000
+                                
+                              })
+                        }else{
+                            if(selected_WorkClass == 0 || selected_WorkClass == null){
+                              Swal.fire({
+                                  icon: 'error',
+                                  title: 'Please Select the Work Class',
+                                  showConfirmButton: false,
+                                  timer: 2000
+                                })
+                          }else{
+                              if(Requestor == 0 || Requestor == null){
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Please Enter the Requestor',
+                                    showConfirmButton: false,
+                                    timer: 2000
+                                  })
+                            }else{
+                                if(selected_WorkGroup == 0 || selected_WorkGroup == null){
+                                  Swal.fire({
+                                      icon: 'error',
+                                      title: 'Please Select the Work Group',
+                                      showConfirmButton: false,
+                                      timer: 2000
+                                    })
+                              }else{
+                                  if(selected_WorkArea == 0 || selected_WorkArea == null){
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Please Select the Work Area',
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                          })
+                                  }else{
+                                      if(ProjectID == 0 || ProjectID == null){
+                                        Swal.fire({
+                                            icon: 'error',
+                                            title: 'Please Enter the Project ID',
+                                            showConfirmButton: false,
+                                            timer: 2000
+                                          })
+                                      }else{
+                                          if(PhoneNo == 0 || PhoneNo == null){
+                                            Swal.fire({
+                                                icon: 'error',
+                                                title: 'Please Enter the Phone No',
+                                                showConfirmButton: false,
+                                                timer: 2000
+                                              })
+                                          }else{
+                                              if(selected_CustomerCode == 0 || selected_CustomerCode == null){
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Please Select the Customer Code',
+                                                    showConfirmButton: false,
+                                                    timer: 2000
+                                                  })
+                                              }else{
+                                                  if(selected_FaultCode == 0 || selected_FaultCode == null){
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Please Select the Fault Code',
+                                                        showConfirmButton: false,
+                                                        timer: 2000
+                                                      })
+                                                  }else{
+
+                                                      if(Button_save ==  "Save"){
+
+                                                          New_WorkRequest();
+                                                      }else if(Button_save == "Update"){
+
+                                                          Update_WorkRequest();
+                                                      }                                       
+                                                    }
+                                                  }
+                                             }
+                                          }
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+              }
+            }
+           }
+         }
+      }   
+  }
+
+
+  const New_WorkRequest =()=>{
+
+    Swal.fire({  title: 'Loading.... !',allowOutsideClick: false})
+    Swal.showLoading()
+
+     let site_ID = localStorage.getItem("site_ID");
+     let emp_mst_login_id = localStorage.getItem("emp_mst_login_id");
+     let emp_mst_empl_id = localStorage.getItem("emp_mst_empl_id");
+ 
+
+    if(WorkRequestNo_disabled){
+        WorkRequestNo_disabled = false
+        console.log(WorkRequestNo_disabled)
+
+    }else{ 
+        
+        if(WorkRequestNo.length > 0){
+            console.log(WorkRequestNo)
+        }else{
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Please Enter the Work Request NO',
+                showConfirmButton: false,
+                timer: 2000
+              })
+        }
+    }
+     
+     //---------------------------------------------------------------------
+
+     let AssetNoGroup = selected_AssetGroupCode.split(":")
+     console.log(AssetNoGroup[0])
+
+     let  CostCenter = selected_CostCenter.label.split(":")
+     console.log(CostCenter[0])
+
+     let  AssetLocation = selected_AssetLocation.label.split(":")
+     console.log(AssetLocation[0])
+
+     let Priority = selected_Priority.label.split(":")
+     console.log(Priority[0])
+
+     let  AssetLevel = selected_AssetLevel.label.split(":")
+     console.log(AssetLevel[0])
+
+     let WorkType = selected_WorkType.label.split(":")
+     console.log(WorkType[0])
+
+     let WorkClass = selected_WorkClass.label.split(":")
+     console.log(WorkClass[0])
+
+     let  WorkGroup = selected_WorkGroup.label.split(":")
+     console.log(WorkGroup[0])
+
+     let  WorkArea = selected_WorkArea.label.split(":")
+     console.log(WorkArea[0])
+
+     let CustomerCode = selected_CustomerCode.label.split(":")
+     console.log(CustomerCode[0])
+
+     let FaultCode = selected_FaultCode.label.split(":")
+     console.log(FaultCode[0])
+
+     //------------------------------------------------------------------
+     
+    // console.log(PurchaseDate)
+    // const formatDate = Moment(PurchaseDate).format('yyyy-MM-DD HH:mm:ss')
+    //  let pur =Moment(PurchaseDate).format("yyyy-MM-dd HH:mm:ss")
+    
+
+
+    if(selected_CustomerCode == '' || selected_CustomerCode == null){
+        
+        setCustomerCode=''
+    }else{
+
+        CustomerCode = selected_CustomerCode.label.split(":")
+        setCustomerCode=CustomerCode[0];
+        console.log(CustomerCode[0])
+    }
+
+
+    var json_workrequest ={
+
+      "site_cd": site_ID, 
+      "wkr_mst_wr_no" : WorkRequestNo.trim(),
+      "wkr_mst_assetno": AssetNo.trim(),
+      // "ast_mst_asset_no": AssetNoGroup.trim(),
+      "wkr_mst_chg_costcenter" : CostCenter[0].trim(), //[0] means it is position in the index dropdown
+      "wkr_mst_location" : AssetLocation[0].trim(),
+      "wkr_mst_orig_priority" : Priority[0].trim(),
+      "ast_mst_ast_lvl":AssetLevel[0].trim(),
+      "wkr_mst_org_date" : OriginateDate.trim(),
+      "wkr_mst_work_type" : WorkType[0].trim(),
+      "wkr_mst_due_date" : DueDate.trim(),
+      "wkr_mst_work_class" : WorkClass[0].trim(),
+      "wkr_mst_requestor" : Requestor.trim(),
+      "wkr_mst_work_group" : WorkGroup[0].trim(),
+      "wkr_mst_work_area" : WorkArea[0].trim(),
+      "wkr_mst_projectid" : ProjectID.trim(),
+      "wkr_mst_requestor_phone" : PhoneNo.trim(),
+      "wkr_det_cus_code" : CustomerCode[0].trim(),
+      "wkr_mst_fault_code" : FaultCode[0].trim(),
+      "wkr_mst_wr_descs" : Description.trim(),
+
+
+        "wkr_det_varchar1":"",
+        "wkr_det_varchar2":"",
+        "wkr_det_varchar3":"",
+        "wkr_det_varchar4":"",
+        "wkr_det_varchar5":"",
+        "wkr_det_varchar6":"",
+        "wkr_det_varchar7":"",
+        "wkr_det_varchar8":"",
+        "wkr_det_varchar9":"",
+        "wkr_det_varchar10":"",
+
+        "wkr_det_varchar11":"",           
+        "wkr_det_varchar12":"",
+        "wkr_det_varchar13":"",
+        "wkr_det_varchar14":"",
+        "wkr_det_varchar15":"",
+        "wkr_det_varchar16":"",
+        "wkr_det_varchar17":"",
+        "wkr_det_varchar18":"",
+        "wkr_det_varchar19":"",
+        "wkr_det_varchar20":"",
+
+        "wkr_det_numeric1":"",
+        "wkr_det_numeric2":"",
+        "wkr_det_numeric3":"",
+        "wkr_det_numeric4":"",
+        "wkr_det_numeric5":"",
+        "wkr_det_numeric6":"",
+        "wkr_det_numeric7":"",
+        "wkr_det_numeric8":"",
+        "wkr_det_numeric9":"",
+        "wkr_det_numeric10":"",
+
+        "wkr_det_numeric11":"",
+        "wkr_det_numeric12":"",
+        "wkr_det_numeric13":"",
+        "wkr_det_numeric14":"",
+        "wkr_det_numeric15":"",
+        "wkr_det_numeric16":"",
+        "wkr_det_numeric17":"",
+        "wkr_det_numeric18":"",
+        "wkr_det_numeric19":"",
+        "wkr_det_numeric20":"",
+        
+        "wkr_det_datetime1":"",
+        "wkr_det_datetime2":"",
+        "wkr_det_datetime3":"",
+        "wkr_det_datetime4":"",
+        "wkr_det_datetime5":"",
+        "wkr_det_datetime6":"",
+        "wkr_det_datetime7":"",
+        "wkr_det_datetime8":"",
+        "wkr_det_datetime9":"",
+        "wkr_det_datetime10":"",
+
+        "wkr_det_datetime11":"",
+        "wkr_det_datetime12":"",
+        "wkr_det_datetime13":"",
+        "wkr_det_datetime14":"",
+        "wkr_det_datetime15":"",
+        "wkr_det_datetime16":"",
+        "wkr_det_datetime17":"",
+        "wkr_det_datetime18":"",
+        "wkr_det_datetime19":"",
+        "wkr_det_datetime20":"",
+
+        "audit_user":emp_mst_login_id.trim(),
+        "ast_mst_create_by":emp_mst_login_id.trim(),
+        "ast_aud_originator":emp_mst_empl_id.trim(),
+    }
+    console.log(JSON.stringify(json_workrequest))
+
+    APIServices.insert_new_workrequest(JSON.stringify(json_workrequest)).then((responseJson)=>{  
+        if (responseJson.data.status === 'SUCCESS') { 
+            Swal.close();
+
+            Swal.fire({
+                icon: 'success',
+                title: responseJson.data.status,
+                text: responseJson.data.message,
+              })
+
+        }else{
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: responseJson.data,
+              })
+
+        }
+    }).catch((e) => {
+        Swal.close();
+        setParentFlag(e);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops get_assetmaster_select...',
+          text: e,          
+        })
+      });
+  }
+
+
+  const Update_WorkRequest =()=>{
+
+    Swal.fire({  title: 'Loading.... !',allowOutsideClick: true})
+    Swal.showLoading()
+
+     let site_ID = localStorage.getItem("site_ID");
+     let emp_mst_login_id = localStorage.getItem("emp_mst_login_id");
+     let emp_mst_empl_id = localStorage.getItem("emp_mst_empl_id");
+
+     let RowID = localStorage.getItem("RowID");
+     console.log('get RowID here...',location.state.RowID);
+ 
+
+    if(WorkRequestNo_disabled){
+        console.log(WorkRequestNo_disabled)
+
+    }else{ 
+        
+        if(WorkRequestNo.length > 0){
+            console.log(WorkRequestNo)
+        }else{
+            Swal.close();
+            Swal.fire({
+                // position: 'top-end',
+                icon: 'error',
+                title: 'Please Enter the Work Request No',
+                showConfirmButton: false, 
+              })
+        }
+    }
+  
+     //---------------------------------------------------------------------
+
+    let WorkRequestNo = setWorkRequestNo.label.split(":")
+    console.log(WorkRequestNo[0])
+
+    let AssetNoGroup = selected_AssetGroupCode.split(":")
+    console.log(AssetNoGroup[0])
+
+    let CostCenter = selected_CostCenter.label.split(":")
+    console.log(CostCenter[0])
+
+    let  AssetLocation = selected_AssetLocation.label.split(":")
+    console.log(AssetLocation[0])  
+
+    let Priority = selected_Priority.label.split(":")
+    console.log(Priority[0])
+
+    let  AssetLevel = selected_AssetLevel.label.split(":")
+    console.log(AssetLevel[0])
+
+    let WorkType = selected_WorkType.label.split(":")
+    console.log(WorkType[0])
+
+    let WorkClass = selected_WorkClass.label.split(":")
+    console.log(WorkClass[0])
+
+    let Requestor = setRequestor.label.split(":")
+    console.log(Requestor)
+
+    let  WorkGroup = selected_WorkGroup.label.split(":")
+    console.log(WorkGroup[0])
+
+    let  WorkArea = selected_WorkArea.label.split(":")
+    console.log(WorkArea[0])
+
+    let ProjectID = setProjectID.label.split(":")
+    console.log(ProjectID)
+
+    let PhoneNo = setPhoneNo.label.split(":")
+    console.log(PhoneNo)
+
+    let FaultCode = selected_FaultCode.split(":")
+    console.log(FaultCode[0])
+     
+    //  let  AssetGroupCode = selected_AssetGroupCode.split(":")
+    //  console.log(AssetGroupCode[0])
+
+     //------------------------------------------------------------------
+     let CustomerCode,setCustomerCode,oridate,duedate;
+
+     //customer code
+    if(selected_CustomerCode == '' || selected_CustomerCode == null){
+        setCustomerCode=''
+
+    }else{
+
+        CustomerCode = selected_CustomerCode.label.split(":")
+        setCustomerCode=CustomerCode[0];
+        console.log(CustomerCode[0])
+    }
+
+    //Originate Date
+    if(OriginateDate == ''){
+      oridate=''
+
+   }else{
+      oridate = Moment(OriginateDate).format('yyyy-MM-DD HH:mm:ss').trim();
+      // console.log(oridate)
+      console.log("OD", Moment(OriginateDate).format('yyyy-MM-DD HH:mm:ss'));
+   };
+
+
+   //Due Date
+   if(DueDate == ''){
+    duedate=''
+
+  }else{
+    duedate= Moment(DueDate).format('yyyy-MM-DD HH:mm:ss').trim();
+    console.log(DueDate)
+    console.log(Moment(DueDate).format('yyyy-MM-DD HH:mm:ss'))
+  }
+
+
+
+    // //Select OriginateDate
+    let org_date = ''
+    if(OriginateDate == '' || OriginateDate == null){
+      
+      org_date='';
+
+    }else{
+      org_date= Moment(OriginateDate).format('yyyy-MM-DD HH:mm:ss').trim();
+      // console.log("OD", org_date);
+    }
+
+
+    // //Select Due Date
+    // let due_date = ''
+    // if(DueDate == ''){
+
+    //   due_date=''
+    // }else{
+    //   due_date= Moment(DueDate).format('yyyy-MM-DD HH:mm:ss').trim();
+    //   // console.log(Moment(DueDate).format('yyyy-MM-DD HH:mm:ss'))
+    // }
+
+
+
+    
+    var json_workrequest ={
+
+        "site_cd": site_ID,
+        "wkr_mst_wr_no" : WorkRequestNo.trim(),
+        "ast_mst_asset_no" : AssetGroupCode[0].trim(),
+        "wkr_mst_chg_costcenter" : CostCenter[0].trim(),
+        "wkr_mst_location" : AssetLocation[0].trim(),
+        "wkr_mst_orig_priority" : Priority[0].trim(),
+        "ast_mst_ast_lvl":AssetLevel[0].trim(),
+        "wkr_mst_org_date": oridate,
+        "wkr_mst_work_type" : WorkType[0].trim(),
+        "wkr_mst_due_date" : duedate,
+        "wkr_mst_work_class" : WorkClass[0].trim(),
+        "wkr_mst_requestor" : Requestor.trim(),
+        "wkr_mst_work_group" : WorkGroup[0].trim(),
+        "wkr_mst_work_area" : WorkArea[0].trim(),
+        "wkr_mst_projectid" : ProjectID.trim(),
+        "wkr_mst_requestor_phone" : PhoneNo.trim(),
+        "wkr_det_cus_code" : CustomerCode[0].trim(),
+        "wkr_mst_fault_code" : FaultCode[0].trim(),
+        "wkr_mst_wr_descs" : Description.trim(),
+
+
+        // "wkr_mst_due_date" : DueDate.trim(),
+      
+        //UDF1
+        "wkr_det_varchar1":"",
+        "wkr_det_varchar2":"",
+        "wkr_det_varchar3":"",
+        "wkr_det_varchar4":"",
+        "wkr_det_varchar5":"",
+        "wkr_det_varchar6":"",
+        "wkr_det_varchar7":"",
+        "wkr_det_varchar8":"",
+        "wkr_det_varchar9":"",
+        "wkr_det_varchar10":"",
+
+        "wkr_det_varchar11":"",           
+        "wkr_det_varchar12":"",
+        "wkr_det_varchar13":"",
+        "wkr_det_varchar14":"",
+        "wkr_det_varchar15":"",
+        "wkr_det_varchar16":"",
+        "wkr_det_varchar17":"",
+        "wkr_det_varchar18":"",
+        "wkr_det_varchar19":"",
+        "wkr_det_varchar20":"",
+
+        "wkr_det_numeric1":"",
+        "wkr_det_numeric2":"",
+        "wkr_det_numeric3":"",
+        "wkr_det_numeric4":"",
+        "wkr_det_numeric5":"",
+        "wkr_det_numeric6":"",
+        "wkr_det_numeric7":"",
+        "wkr_det_numeric8":"",
+        "wkr_det_numeric9":"",
+        "wkr_det_numeric10":"",
+
+        "wkr_det_numeric11":"",
+        "wkr_det_numeric12":"",
+        "wkr_det_numeric13":"",
+        "wkr_det_numeric14":"",
+        "wkr_det_numeric15":"",
+        "wkr_det_numeric16":"",
+        "wkr_det_numeric17":"",
+        "wkr_det_numeric18":"",
+        "wkr_det_numeric19":"",
+        "wkr_det_numeric20":"",
+        
+        "wkr_det_datetime1":"",
+        "wkr_det_datetime2":"",
+        "wkr_det_datetime3":"",
+        "wkr_det_datetime4":"",
+        "wkr_det_datetime5":"",
+        "wkr_det_datetime6":"",
+        "wkr_det_datetime7":"",
+        "wkr_det_datetime8":"",
+        "wkr_det_datetime9":"",
+        "wkr_det_datetime10":"",
+
+        "wkr_det_datetime11":"",
+        "wkr_det_datetime12":"",
+        "wkr_det_datetime13":"",
+        "wkr_det_datetime14":"",
+        "wkr_det_datetime15":"",
+        "wkr_det_datetime16":"",
+        "wkr_det_datetime17":"",
+        "wkr_det_datetime18":"",
+        "wkr_det_datetime19":"",
+        "wkr_det_datetime20":"",
+
+        // "RowID":RowID.trim(),
+        "RowID":location.state.RowID,
+    }
+
+    console.log("Update : "+JSON.stringify(json_workrequest))
+
+    APIServices.update_workrequest(JSON.stringify(json_workrequest)).then((responseJson)=>{
+        if (responseJson.data.status === 'SUCCESS') { 
+            Swal.close();
+            Swal.fire({
+                icon: 'success',
+                title: responseJson.data.status,
+                text: responseJson.data.message,
+              })
+
+        }else{
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: responseJson.data,
+              })
+        }
+    }).catch((e) => {
+        Swal.close();
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops get_assetmaster_select...',
+          text: e,          
+        })
+      });
+  }
+
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+
+    selectedFlatRows,
+    resetResizing,
+    state: { selectedRowIds },
+  } = useTable({ columns, data }, useSortBy, useRowSelect, useResizeColumns);
+
+
+  const handleRowClick = (data) => {
+    ParentFlag_handleClose();
+    setselected_ParentFlag(data.col1)
+    console.log(data.col1)
+  };
+
+
+  return (
+    <div>
+      <div className="page-header">
+        <h3 className="page-title">Work Request</h3>
+
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <div className="template-demo">
+              <button type="button" className="btn btn-success btn-icon-text" onClick={onClickChange}>
+                <i className="mdi mdi-file-check btn-icon-prepend"></i>{" "}
+                {Button_save}
+              </button>
+
+              <button type="button" className="btn btn-danger btn-icon-text" onClick={() => {history.push("/WorkRequest");}}>
+                <i className="mdi mdi-close-circle-outline btn-icon-prepend"></i>{" "}
+                Cancel
+              </button>
+            </div>
+          </ol>
+        </nav>
+      </div>
+
+      <div className="col-12 grid-margin">
+        <div className="card">
+          <div className="card-body">
+            <form className="form-sample" validated={validated}>
+              <div>
+                {/* <Button variant="primary" onClick={handleShow}>
+                            Launch Bootstrap Modal
+                        </Button> */}
+
+                <Modal show={show} onHide={handleClose} centered>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Asset No</Modal.Title>
+                  </Modal.Header>
+
+                  <Modal.Body>
+                    <Form.Control
+                      type="search"
+                      className="form-control"
+                      placeholder="Search Here"
+                      value={name}
+                      onChange={(text) => filter(text)}
+                    />
+
+                    <div className="user-list">
+                      {filteredDataSource && filteredDataSource.length > 0 ? (
+                        filteredDataSource.map((user) => (
+                          setParentFlag(user),
+
+                          <li key={user.label} className="user" onClick={() =>handleSelect(user.label + " : " + user.value)}>
+                            <span className="user-id">{user.label}</span>
+                            <span className="user-name">{user.value}</span>
+                          </li>
+                        ))
+
+                      ) : (
+                        <h4 style={{textAlign : 'center', fontFamily : "montserrat", fontWeight : "bold", color : "grey"}}>No results found!</h4>
+                      )}
+                    </div>
+                  </Modal.Body>
+
+                  {/* <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>Close</Button>
+                    <Button variant="primary" onClick={handleClose}>Submit</Button>
+                  </Modal.Footer> */}
+                </Modal>
+
+                <Modal show={ParentFlag_show} onHide={ParentFlag_handleClose} centered size="xl">
+                  <Modal.Header closeButton>
+                    <Modal.Title>Asset Code</Modal.Title>
+                  </Modal.Header>
+
+                  {/* <Modal.Body>
+                    <Form.Control
+                      type="search"
+                      className="form-control"
+                      placeholder="Search Here"
+                      value={name}
+                      onChange={(text) => filter(text)}
+                    />
+
+                    <div className="table-responsive">
+                      <table
+                        className="table table-hover table-bordered"
+                        {...getTableProps()}
+                        on
+                      >
+                        <thead>
+                          {headerGroups.map((headerGroup) => (
+                            <tr
+                              {...headerGroup.getHeaderGroupProps()}
+                              className="tr"
+                            >
+                              {headerGroup.headers.map((column) => (
+                                <th
+                                  {...column.getHeaderProps(
+                                    column.getSortByToggleProps()
+                                  )}
+                                  style={{
+                                    borderBottom: "solid 3px red",
+                                    color: "black",
+                                  }}
+                                  {...column.getResizerProps()}
+                                  className={`resizer ${
+                                    column.isResizing ? "isResizing" : ""
+                                  }`}
+                                >
+                                  {column.render("Header")}
+
+                                  <span>
+                                    {column.isSorted
+                                      ? column.isSortedDesc
+                                        ? "🔽"
+                                        : "🔼"
+                                      : ""}
+                                  </span>
+                                </th>
+                              ))}
+                            </tr>
+                          ))}
+                        </thead>
+                        <tbody {...getTableBodyProps()}>
+                          {rows.map((row) => {
+                            prepareRow(row);
+                            return (
+                              <tr {...row.getRowProps()} onClick={() => handleRowClick(row.original)}>
+                                {row.cells.map((cell) => {
+                                  return (
+                                    <>
+                                      {/* Here added onClick function to get cell value 
+                                      <td
+                                      // onClick={()=> getCellValue(cell)}
+                                      //     {...cell.getCellProps()}
+                                      //     style={{
+                                      //     padding: '10px',
+                                      //     border: 'solid 1px gray',
+                                      //     background: 'papayawhip',
+                                      //     }}
+                                      >
+                                        {cell.render("Cell")}
+                                      </td>
+                                    </>
+                                  );
+                                })}
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
+                  </Modal.Body> */}
+                </Modal>
+              </div>
+
+              <div className="row">
+                <div className="col-md-10">
+                  <div className="row">
+                    {/* Work Request No */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Work Request no:
+                        </label>
+                        <div className="col-sm-9">
+                          <Form.Control
+                            type="text"
+                            value={WorkRequestNo}
+                            onChange={(e) => setWorkRequestNo(e.target.value)} 
+                            disabled={WorkRequestNo_disabled}
+                          />{" "}
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Approval Status */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          {/* <span style={{ color: "red" }}class="required-asterisk">*{" "}</span> */}
+                          Approval Status:
+                        </label>
+                        <div className="col-sm-9">
+                          <Form.Control
+                            type="text"
+                            value="Awaiting (W)"
+                            readOnly
+                          />{" "}
+                          {/**disabled={WorkRequestNo_disabled} */}
+                        </div>
+                      </Form.Group>
+                    </div>
+
+
+                    {/* Asset No */}
+                    <div className="col-md-6">
+                      <Form.Group className="row" controlId="validation_AssetNo"> 
+                        <label className="col-sm-3 col-form-label">
+                          <span style={{ color: "red" }} class="required-asterisk">*{" "}</span> Asset no:
+                        </label>
+                        <div className="col-sm-9">
+                          {/* <Form.Control
+                            type="text"
+                            value={AssetNo}
+                            onChange={(e) => setAssetNo(e.target.value)}
+                          />{" "} */}
+
+                          <Form.Control  type="select" className="form-control" placeholder="Search Here" value={selected_AssetGroupCode} onClick={handleShow} /> 
+                        </div>
+                      </Form.Group>
+                    </div>
+
+
+                    {/* Charge Cost Center */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Charge Cost Center:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_CostCenter}
+                            onChange={setSelected_CostCenter}
+                            options={CostCenter}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Asset Location */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Asset Location:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_AssetLocation}
+                            onChange={setSelected_AssetLocation}
+                            options={AssetLocation}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Original Priority */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Original Priority:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_Priority}
+                            onChange={setSelected_Priority}
+                            options={Priority}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Level */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Level:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_AssetLevel}
+                            onChange={setSelected_AssetLevel}
+                            options={AssetLevel}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Origination Date */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Origination Date:
+                        </label>
+                        <div className="col-sm-9">
+                          <Form.Control 
+                            type="datetime-local" 
+                            // value={OriginateDate} 
+                            selected={OriginateDate}
+                            // onChange={(e) => setOriginateDate(e.target.value)}
+                            onChange={date => setOriginateDate(date)}
+                            />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Work Type */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Work Type:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_WorkType}
+                            onChange={setSelected_WorkType}
+                            options={WorkType}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Due Date */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Due Date:
+                        </label>
+                        <div className="col-sm-9">
+                          <Form.Control type="date" value={DueDate} onChange={(e) => setDueDate(e.target.value)}/>
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Work Class */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Work Class:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_WorkClass}
+                            onChange={setSelected_WorkClass}
+                            options={WorkClass}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Requestor */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Requestor:
+                        </label>
+                        <div className="col-sm-9">
+                          <Form.Control type="text" value={Requestor} onChange={(e) => setRequestor(e.target.value)}/>
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Work Group */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Work Group:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_WorkGroup}
+                            onChange={setSelected_WorkGroup}
+                            options={WorkGroup}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Work Area */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Work Area:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_WorkArea}
+                            onChange={setSelected_WorkArea}
+                            options={WorkArea}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Project ID */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Project ID:
+                        </label>
+                        <div className="col-sm-9">
+                          <Form.Control type="text" value={ProjectID} onChange={(e) => setProjectID(e.target.value)}/>
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Phone Number */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Phone No:
+                        </label>
+                        <div className="col-sm-9">
+                          <Form.Control type="number" value={PhoneNo} onChange={(e) => setPhoneNo(e.target.value)}/>
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Customer Code */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Customer Code:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_CustomerCode}
+                            onChange={setSelected_CustomerCode}
+                            options={CustomerCode}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    {/* Fault Code */}
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_AssetNo"
+                      >
+                        <label className="col-sm-3 col-form-label">
+                          <span
+                            style={{ color: "red" }}
+                            class="required-asterisk"
+                          >
+                            *{" "}
+                          </span>
+                          Fault Code:
+                        </label>
+                        <div className="col-sm-9">
+                          <Select
+                            isClearable={true}
+                            //isMulti
+                            value={selected_FaultCode}
+                            onChange={setSelected_FaultCode}
+                            options={FaultCode}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+
+                    <div className="col-md-6">
+                      <Form.Group
+                        className="row"
+                        controlId="validation_LongDesc"
+                      >
+                        <Form.Label className="col-sm-3 col-form-label">
+                          Description:
+                        </Form.Label>
+                        <div className="col-sm-9">
+                          <Form.Control
+                            as="textarea"
+                            rows={5}
+                            value={Description}
+                            onChange={(e) => setDescription(e.target.value)}
+                          />
+                        </div>
+                      </Form.Group>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sliding images */}
+                <div className="col-md-2">
+                  <div className="row">
+                    <AliceCarousel
+                      autoPlay
+                      autoPlayInterval="3000"
+                      animationDuration={1000}
+                      animationType="slide"
+                      infinite
+                      touchTracking={false}
+                      disableDotsControls
+                    >
+                      <img
+                        src={require("../../assets/images/product_images_2/thumb_logo.png")}
+                        className="sliderimg"
+                        alt=""
+                      />
+                      <img
+                        src={require("../../assets/images/product_images_2/thumb_work1.png")}
+                        className="sliderimg"
+                        alt=""
+                      />
+                    </AliceCarousel>
+                  </div>
+                </div>
+              </div>
+
+              {/* Tab */}
+              <section id="tab-menus">
+                <Tabs
+                  defaultActiveKey="UDF1"
+                  id="uncontrolled-tab-example"
+                  className="mb-4"
+                >
+                  <Tab
+                    eventKey="UDF1"
+                    title="UDF1"
+                    class="nav nav-tabs nav-item nav-link active"
+                  >
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar1:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_1}
+                              onChange={(e) => setUDFText_1(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric1:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_1}
+                              onChange={(e) => setUDFNumber_1(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date1:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_1}
+                              onChange={(date) => setUDFDate_1(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar2:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_2}
+                              onChange={(e) => setUDFText_2(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric2:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_2}
+                              onChange={(e) => setUDFNumber_2(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date2:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_2}
+                              onChange={(date) => setUDFDate_2(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar3:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_3}
+                              onChange={(e) => setUDFText_3(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric3:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_3}
+                              onChange={(e) => setUDFNumber_3(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date3:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_3}
+                              onChange={(date) => setUDFDate_3(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar4:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_4}
+                              onChange={(e) => setUDFText_4(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric4:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_4}
+                              onChange={(e) => setUDFNumber_4(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date4:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_4}
+                              onChange={(date) => setUDFDate_4(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar5:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_5}
+                              onChange={(e) => setUDFText_5(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric5:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_5}
+                              onChange={(e) => setUDFNumber_5(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date5:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_5}
+                              onChange={(date) => setUDFDate_5(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar6:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_6}
+                              onChange={(e) => setUDFText_6(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric6:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_6}
+                              onChange={(e) => setUDFNumber_6(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date6:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_6}
+                              onChange={(date) => setUDFDate_6(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar7:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_7}
+                              onChange={(e) => setUDFText_7(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric7:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_7}
+                              onChange={(e) => setUDFNumber_7(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date7:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_7}
+                              onChange={(date) => setUDFDate_7(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar8:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_8}
+                              onChange={(e) => setUDFText_8(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric8:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_8}
+                              onChange={(e) => setUDFNumber_8(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date8:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_8}
+                              onChange={(date) => setUDFDate_8(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar9:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_9}
+                              onChange={(e) => setUDFText_9(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric9:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_9}
+                              onChange={(e) => setUDFNumber_9(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date9:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_9}
+                              onChange={(date) => setUDFDate_9(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar10:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_10}
+                              onChange={(e) => setUDFText_10(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric10:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_10}
+                              onChange={(e) => setUDFNumber_10(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date10:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_10}
+                              onChange={(date) => setUDFDate_10(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div class="form-outline w-100 text-center">
+                        <Form.Group className="row">
+                          <label className="col-sm-1 col-form-label">
+                            Wkr Det Note1:
+                          </label>
+                          <div className="col-sm-9">
+                            <textarea
+                              class="form-control"
+                              id="textAreaExample2"
+                              rows="8"
+                            ></textarea>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                  </Tab>
+
+                  <Tab eventKey="UDF2" title="UDF2" class="nav-link active">
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar11:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_1}
+                              onChange={(e) => setUDFText_1(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      {/* ****************************************************************** */}
+                      {/* <div className="col-md-4">
+                                            <div class="form-outline">
+                                                <Form.Group className="row">
+                                                    <textarea class="form-control" id="textAreaExample2" rows="8"></textarea>
+                                                    <label class="form-label" for="textAreaExample2">Message</label>
+                                                </Form.Group>
+                                            </div>
+                                        </div>     
+
+
+                                        
+                                            */}
+
+                      {/* ******************************************************************** */}
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric11:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_1}
+                              onChange={(e) => setUDFNumber_1(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date11:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_1}
+                              onChange={(date) => setUDFDate_1(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar12:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_2}
+                              onChange={(e) => setUDFText_2(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric12:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_2}
+                              onChange={(e) => setUDFNumber_2(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date12:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_2}
+                              onChange={(date) => setUDFDate_2(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar13:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_3}
+                              onChange={(e) => setUDFText_3(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric13:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_3}
+                              onChange={(e) => setUDFNumber_3(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date13:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_3}
+                              onChange={(date) => setUDFDate_3(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar14:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_4}
+                              onChange={(e) => setUDFText_4(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric14:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_4}
+                              onChange={(e) => setUDFNumber_4(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date14:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_4}
+                              onChange={(date) => setUDFDate_4(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar15:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_5}
+                              onChange={(e) => setUDFText_5(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric15:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_5}
+                              onChange={(e) => setUDFNumber_5(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date15:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_5}
+                              onChange={(date) => setUDFDate_5(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar16:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_6}
+                              onChange={(e) => setUDFText_6(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric16:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_6}
+                              onChange={(e) => setUDFNumber_6(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date16:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_6}
+                              onChange={(date) => setUDFDate_6(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar17:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_7}
+                              onChange={(e) => setUDFText_7(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric17:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_7}
+                              onChange={(e) => setUDFNumber_7(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date17:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_7}
+                              onChange={(date) => setUDFDate_7(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar18:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_8}
+                              onChange={(e) => setUDFText_8(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric18:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_8}
+                              onChange={(e) => setUDFNumber_8(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date18:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_8}
+                              onChange={(date) => setUDFDate_8(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar19:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_9}
+                              onChange={(e) => setUDFText_9(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric19:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_9}
+                              onChange={(e) => setUDFNumber_9(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date19:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_9}
+                              onChange={(date) => setUDFDate_9(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Varchar20:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              value={UDFText_10}
+                              onChange={(e) => setUDFText_10(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Numeric20:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              value={UDFNumber_10}
+                              onChange={(e) => setUDFNumber_10(e.target.value)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      <div className="col-md-4">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Wkr Det Date20:
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="datetime-local"
+                              selected={UDFDate_10}
+                              onChange={(date) => setUDFDate_10(date)}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+
+                      {/* <div className="col-md-4"> */}
+                      <div class="form-outline w-100 text-center">
+                        <Form.Group className="row">
+                          <label className="col-sm-1 col-form-label">
+                            Wkr Det Note2:
+                          </label>
+                          <div className="col-sm-9">
+                            <textarea
+                              class="form-control"
+                              id="textAreaExample2"
+                              rows="8"
+                              cols="28"
+                            ></textarea>
+                          </div>
+                        </Form.Group>
+                      </div>
+                      {/* </div> */}
+                    </div>
+                  </Tab>
+
+                  {/*<Tab eventKey="UDF2" title="UDF2" class="nav-link active">
+                                 <div className= 'container-wr'>
+                                    <div className='size-info'>
+                                        <h3 className='size1'>Mobile Small</h3>
+                                        <h3 className='size2'>Mobile Medium</h3>
+                                        <h3 className='size3'>Mobile Large</h3>
+                                        <h3 className='size4'>Tablet</h3>
+                                        <h3 className='size5'>Laptop</h3>
+                                        <h3 className='size6'>Laptop L</h3>
+                                        <h3 className='size7'>4K</h3>
+                                    </div>
+
+                                    <div className='div1'>
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar11 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+                                        
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar12 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar13 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+                                        
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar14 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar15 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar16 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar17 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar18 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar19 : </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Varchar20: </label>   
+                                            <input className='input' type="text"/><br></br>
+                                        </div>  
+
+                                        
+                                    </div>
+                                
+
+                            <div className='div2'>
+                                    <div className='form-field'>
+                                        <label className='label'>Wkr Det Note2 : </label>   
+                                        <textarea rows="6" cols="75"></textarea>
+                                    </div>  
+
+                                <div className='div2-div1'>
+                                    <div className='div2-div1'>
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Numeric6 : </label>   
+                                            <input className='input' type="number" step='.0001'  placeholder='0.0000'/><br></br>
+                                        </div> 
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Numeric7 : </label>   
+                                            <input className='input' type="number" step='.0001' placeholder='.0000'/><br></br>
+                                        </div> 
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Numeric8 : </label>   
+                                            <input className='input' type="number" step='.0001' placeholder='.0000'/><br></br>
+                                        </div> 
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Numeric9 : </label>   
+                                            <input className='input' type="number" step='.0001' placeholder='.0000'/><br></br>
+                                        </div> 
+
+                                        <div className='input-box'>
+                                            <label className='label'>Wkr Det Numeric10: </label> {/* style={{width : 120}}    
+                                            <input className='input' type="number" step='.0001' placeholder='.0000'/><br></br>
+                                        </div> 
+                                    </div>
+                                </div>
+
+
+                                <div className='div2-div2'>
+                                    <div className='input-box'>
+                                            <label className='label'>Wkr Det Datetime6 : </label>   
+                                            <input className='input' type="date"/><br></br>
+                                    </div>
+
+                                    <div className='input-box'>
+                                            <label className='label'>Wkr Det Datetime7 : </label>   
+                                            <input className='input' type="date"/><br></br>
+                                    </div>
+
+                                    <div className='input-box'>
+                                            <label className='label'>Wkr Det Datetime8 : </label>   
+                                            <input className='input' type="date"/><br></br>
+                                    </div>
+
+                                    <div className='input-box'>
+                                            <label className='label'>Wkr Det Datetime9 : </label>   
+                                            <input className='input' type="date"/><br></br>
+                                    </div>
+
+                                    <div className='input-box'>
+                                            <label className='label'>Wkr Det Datetime10 : </label>   
+                                            <input className='input' type="date"/><br></br>
+                                    </div>
+                                </div>              
+                            </div>
+                            </div>  
+                                
+                            </Tab> */}
+
+                  <Tab eventKey="Status" title="Status" class="nav-link active">
+                    {/* <div className="row" style={{backgroundColor : "red"}}>
+                                    <div className="col-md-4">
+                                        <Form.Group className="row">
+                                            <fieldset className="border p-1 w-100">
+                                                <legend className="w-auto">Approve Details</legend>  {/**style={{borderBottom : "solid 1px black"}} 
+                                                <label className="col-sm-9 col-form-label">Approved By :</label><br></br>
+                                                <label className="col-sm-9 col-form-label">Approved Date :</label><br></br>
+                                                <label className="col-sm-9 col-form-label">Work Order No :</label><br></br>
+                                                <label className="col-sm-9 col-form-label">Work Status :</label>
+                                            </fieldset>
+                                        </Form.Group>
+
+                                        <Form.Group className="row">
+                                            <fieldset className="border p-1 w-100">
+                                                <legend className="w-auto">Disapprove Details</legend>  {/**style={{borderBottom : "solid 1px black"}} 
+                                                <label className="col-sm-9 col-form-label">Rejected By :</label><br></br>
+                                                <label className="col-sm-9 col-form-label">Rejected Date :</label><br></br>
+                                                <label className="col-sm-9 col-form-label">Rejected Description :</label><br></br>
+                                            </fieldset>
+                                        </Form.Group>
+                                    </div>
+                                </div>          */}
+
+                    <div className="status-container">
+                      <div className="status-box">
+                        <Form.Group className="row">
+                          <fieldset className="border p-1 w-100">
+                            <legend className="w-auto">Approve Details</legend>
+                            <label>Approved By :</label>
+                            <br></br>
+                            <label>
+                              Approved Date :{" "}
+                              <span style={{ marginLeft: 10 }}>
+                                00/00/0000 00:00:00
+                              </span>
+                            </label>
+                            <br></br>
+                            <label>Work Order No :</label>
+                            <br></br>
+                            <label>Work Status :</label>
+                          </fieldset>
+                        </Form.Group>
+
+                        <Form.Group className="row">
+                          <fieldset className="border p-1 w-100">
+                            <legend className="w-auto">
+                              Disapprove Details
+                            </legend>
+                            <label>Rejected By :</label>
+                            <br></br>
+                            <label>
+                              Rejected Date :{" "}
+                              <span style={{ marginLeft: 10 }}>
+                                00/00/0000 00:00:00
+                              </span>
+                            </label>
+                            <br></br>
+                            <label>Rejected Description :</label>
+                            <br></br>
+                          </fieldset>
+                        </Form.Group>
+                      </div>
+                    </div>
+                  </Tab>
+
+                  <Tab
+                    eventKey="List 1"
+                    title="List 1"
+                    class="nav-link active"
+                  ></Tab>
+
+                  <Tab
+                    eventKey="List 2"
+                    title="List 2"
+                    class="nav-link active"
+                  ></Tab>
+
+                  <Tab
+                    eventKey="Reference"
+                    title="Reference"
+                    class="nav-link active"
+                  >
+                    <Form.Group>
+                      <label>File upload</label>
+                      <div className="custom-file">
+                        <Form.Control
+                          type="file"
+                          className="form-control visibility-hidden"
+                          id="customFileLang"
+                          lang="es"
+                        />
+                        <label
+                          className="custom-file-label"
+                          htmlFor="customFileLang"
+                        >
+                          Upload image
+                        </label>
+                      </div>
+                    </Form.Group>
+                  </Tab>
+                </Tabs>
+              </section>
+            </form>
+
+            <div className="page-header">
+              <h3 className="page-title"></h3>
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                  <div className="template-demo">
+                    <div className="bottom-button23">
+                      <button
+                        type="button"
+                        className="btn btn-success btn-icon-text"
+                      >
+                        <i className="mdi mdi-file-check btn-icon-prepend"></i>{" "}
+                        {Button_save}
+                      </button>
+
+                      <button type="button" className="btn btn-danger btn-icon-text" onClick={() => {history.push("/WorkRequest");}}>
+                        <i className="mdi mdi-close-circle-outline btn-icon-prepend"></i>{" "}
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                </ol>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default WorkRequestForm;

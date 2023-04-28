@@ -1,0 +1,105 @@
+Work Order
+
+done* 1.Default Origination Date  as today date/ now
+done* 2.Default Due Date  as today date/ now
+done* 3.When Choosing Fault Code > Set the description of fault code to 		Description 
+done* 4.Clear Form when save new work order succesfully. 
+done* 5.When Select Asset, Default the value for Asset Status, Cost Centre, Work Area, Asset Level & Asset Location
+done* 6.Asset No (auto Default data)
+	(api -> form -> params)
+---------------------------------
+
+Inventory
+
+done* 1. hard code label / value : S , Flaut code to desciption item ,  filter search ,  read update all file.
+done* 2. radio box, enter any box the number if save after will go up 1st.
+done* 3. pop up, click item and select item use API
+done*** 4. pop up, click item and enter word after save, item use API,and how to 	dropdown data to Location body here.
+done*	5. Inventory Location Header API how to change, and PHP file.
+done* 6. use CPI, create all item by myself. ***everyday
+
+Work Request
+
+done* 7. create workrequest insert / update
+done*	8. workrequest update problems (RowID)
+done* 9. do new one workrequest module.
+done*	10. once ticked, got new button - Approve
+
+Work Order
+
+done*	11. create clickbox after change php api.
+done*	12. once ticked, got new button - Complete WO
+done*	13. once mouse on item, will get button (floating...)
+
+Work Request
+	
+done*	API: WorkOrder, Employee, Asset... WorkRequest, Inventory -> 	RowID.........$key[55] = "RowID";
+		(CAN GET BUTTON)...............(CANT GET BUTTON).....(API SERVICE)...(PHP)
+done*	14. Resolve API issue of Work Request.
+done* 15. Tick Check button.
+done*	16. Double Click on list to Update pages.
+done*	17. 2 Button Approve / Disapprove on list
+done*	18. 2 Floating button word.
+done*	19. Approve WR button, after pop up done get API.
+done*	20. Approve WR pop up, change select or radio button, Save button change 	Approve button.
+done*	21. read data = site_cd...(API SERVICE)
+done*	22. Button 4x4, color
+done*	23. A word background color
+done* 24. Search filter button, search all.
+
+Work Order
+	
+done*** 25. TimeCard how to Add and Delete item, use vue, google search
+done* 26. All Submit button.
+done*	27. Approval Status > A, D, W > Approvel, Disapprovel, Awaiting
+			
+
+
+done* 28. Header box width.
+done* 29. Read Assetno select data
+done* 30. Disapprove Popup RejectBy
+	31. Create Read Awaiting(W) data
+done* 32. Login Page Design
+	33. Search button
+	34. Insert / Update (emp_det_numeric1 - emp_det_numeric5)
+	35. Insert (workorder save)error
+	36. System Default Setting, save button
+done* 37. Cancel button
+done* 38. Approval Status : D, A ,W
+done* 39. POP-UP status list at Approval Status
+
+Work Request 
+
+done* 40. 'New work request' button > Change to 'New'
+done* 41. column height standardized for all field
+done* 42. column to column spacing, make it smaller
+
+
+Work Order
+
+done* 43. Button Menu for work order (complete, close, edit & Delete)
+done* 44. WO table status > CLO, OPEN, CMP
+done* 45. WO > Status Audit Tab > Status Tracking *
+done* 46. Status Tracking design
+	47. WO > Planning > Misc > Date
+done* 48. Select box size
+
+**************************************************************
+
+done* 1. Tooltip for Icon - Asset Status Audit
+
+done* 2. Asset Module > Asset No field > Add Icon (... (History)) for dropdown menu
+
+		** PM Setup
+		** WO History
+		** Relocation History
+		** Check list
+
+done* 3. Remove Info Tab
+done* 4. New Tab - Spare List - Functions with Add & Delete
+done* 5. New Tab - Usages - Functions with Add & Delete
+done* 6. New Tab - Specification - Functions with Add & Delete
+done* 7. Asset Screen Problems
+
+
+

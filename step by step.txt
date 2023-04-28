@@ -1,0 +1,131 @@
+1. 	Open Wampserver64.
+	if login ok Green color local server is done.
+
+2. 	Go browser login --> http://192.168.0.23:8080/React_web/
+	if login ok is done.
+
+3.	Go Pc --> C:\wamp64\www\React_web	,open --> get_dropdown file.
+	if login ok is go to Notepad++
+
+4.	Open SQL Server Profiler.
+	4.1.	choose New Trace --> Login sa to Connect.
+	4.2.	choose Event Selection.
+	4.3.	choose and click Security Audit ( Audit Login, Audit Logout )
+	4.4.	choose and click Sessions ( ExistingConnection )
+	4.5.	choose and click Stored Procedures ( RPC:Completed )
+	4.6.	choose and click TSQL ( SQL:BatchCompleted, SQL:BatchStarting )
+	4.7.	click Run.
+	4.8.	Clear Trace Window.
+	4.9.	Starting Selected Trace.
+
+5.	Open CMMS.
+	5.1.	choose --> People --> Employee.
+	5.2.	click --> New go Employee pages.
+	5.3.	double click search box / CTRL + SHIRT + K
+	5.4.	go to SQL Server Profiler.
+	5.5.	Pause Selected Trace.
+	5.6.	will Reading DATA, and at ApplicationName choose CMMS SYSTEM.
+	5.7.	click --> SQL:BatchCompleted see the item.
+		like this --( SELECT usr_grp.usr_grp_usr_grp )
+	5.8.	copy all item --( SELECT usr_grp.usr_grp_usr_grp )
+
+6.	Open SQLQuery.
+	6.1.	click --> New Query ,paste 'copy all item here'.
+	6.2.	click --> Execute to read DATA.
+
+7.	go back 'get_dropdown' Notepad++.
+	7.1.	find --> //Customer Code or //Emp status----JASON.	***909***
+	7.2.	copy and paste this down.
+		7.2.1.	$sql= " ...
+			} while ( ...
+	7.3.	find and check --> sqlsrv_close( $conn);
+		7.3.1.	if down have --> $json_All['Employee_Status'] = $emp_sts; no need put new one,
+		7.3.2.	if down dont have ,need put $json_All[] ,data here.
+	7.4.	find --> case 'Employee_Status':	***2186***
+	7.5.	copy and paste this down.
+		7.5.1.	case 'Employee_Status': ...
+			break; ...
+8.	Open POSTMAN.
+	8.1.	paste --> http://192.168.0.23:8080/React_web/get_asset_status?site_cd=AFPK 
+	8.2.	or --> http://192.168.0.23:8080/React_web/get_dropdown?site_cd=AFPK&type=Employee_Status 
+	8.3.	to send and check Json.
+
+
+
+
+*Services --> SQL Server (MSSQLSERVER) --> Stop/ Start
+
+*unlock ID settings
+*SQL Query -->	QSR -->	select * from cf_user where empl_id ='demo'
+					update cf_user set cf_user_locked ='0'  where empl_id ='demo'
+
+*Task Manager --> Close app
+
+
+Windows + R
+%temp% -->清理内存垃圾
+
+
+
+*Connect own Pc server IP
+Click Wampserver64 --> PHP 7.4.0 --> php.ini -->	;;;;;;;;;;;;;;;;;;; above --> add extension=php_pdo_sqlsrv_74_ts_x64.dll
+									; Module Settings ;		   / 	extension=php_sqlsrv_74_ts_x64.dll
+									;;;;;;;;;;;;;;;;;;;
+
+		after Open --> C:\wamp64\bin\php\php7.4.0\ext
+		add 2 file --> extension=php_pdo_sqlsrv_74_ts_x64.dll / extension=php_sqlsrv_74_ts_x64.dll
+		
+	
+
+*Restore Database 
+1.	Open SQLQuery6.sql
+		1.1.	Open Databases --> Restore Database.
+		1.2.	click General --> choose Device --> ... --> Add --> D:\CMMS\DATABASE\ {file} .bak --> OK.
+		1.3.	click Files --> ... --> D:\CMMS\DATABASE\ {file} .bak --> copy n paste D:\CMMS\DATABASE\ {file} .bak --> paste at 2blank.
+		1.4.	click Options --> click Overwrite the existing database (WITH REPLACE) --> OK.
+		1.5.	Open D:\CMMS\APPLICATION\01. CMMS CPI --> evantage file --> change ServerName / Database / DBParm name.
+		1.6.	Open SQLQuery1.sql --> New Query --> select * from sys_ver
+			1.6.1. check sys_ver_customer_cd, and copy.
+			1.6.2. New Query --> update sys_ver SET sys_ver_customer_cd ='D1022'
+
+
+*Change the CMMS (QSR --> CPI)
+1.	Open config.php
+		$_database = "cmms_qsr"; --> change to $_database = "cmms_cpi";
+
+
+
+
+*Developer (Remote Desktop Connection) 
+	npm run build
+	1. React_web.zip
+	2. copy n paste React_Web to Company Pc http://evantage.ddns.net/web_dev
+
+	*C:\Users\USER\Desktop\CMMS_WEB\cmms\build
+	1. copy all n paste to Web_dev
+
+	*D:\React_Web
+	1. copy React_web.zip n paste to here
+
+	*Open config.php change //
+		$_serverName = "ESSB01-DESKTOP\SQLEXP2019";
+		$_database = "cmms_bdcm_prod";
+
+	*Again - npm run build
+
+	http://evantage.ddns.net/React_web/
+
+http://evantage.ddns.net/React_web/web_dev
+
+**if own pc dont have update, pls clearing cookie.
+
+
+
+
+
+
+
+
+
+
+

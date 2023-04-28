@@ -1,0 +1,132 @@
+Preventive management Module == service
+- Preventive Maintenance
+	- Preventive -> Info
+		Red = expired / Black = Hvt expired
+	-  New 
+		- Asset No
+		- Frequency Code
+
+Master File - pm-frequency code to setting. (self define)
+
+		- Default WO Status
+		- Plan Priority
+		- Desciption
+		- Next Due to setting, then LPM Date, LPM Closed Date will Auto.
+			- LPM Date
+			- LPM Closed Date
+		- Lead Day to setting how many day will count between Next Due.
+		- Closed Loop? click. if never click, Red will stop update date.
+		- Disable Flag
+
+	- Generate 
+		- Generate after will see on count to next month.
+		- Work Order get info.
+		- Click Generate after item.
+			- PM Audit see Work Order No.
+	-  New 
+		- Check List
+			- Add to ur item.
+
+if click Open Loop - Date 17/02/2023 to continue until stop to Close Loop 
+if click Close Loop - Date 17/02/2023 to stop here, never to continue.
+
+	- PM Schedule Date with Closed Loop together Active.
+
+if click Close Loop + Schedule Date - Date 17/02/2023 to 19/03/2023 make sure date, then never change closed date.
+
+- WorkOrder
+- Demand Task
+- Procurement
+	- Supplier Master
+		- New
+			- Supplier Code
+			- Status
+			- Currency Code
+			- Desciption
+
+	- Purchase Request
+		- Buyer, need to go employee module click PO Buyer, after can using.
+		- PR Line
+			- Add, add line item.
+
+	- PR Apporval
+		- Approve
+		- Disapprove, dont agree and need to cancel.
+		- Reject, restart project, and remark why?
+
+	- Order From
+		- PO Line
+			- Add, add item.
+		- Close PO, manual close po item.
+
+- Spare Parts
+	- Receive Transaction
+		
+- Procurement
+	- PO Contract
+		- Generate, done.
+	- Contract Release Request / Contract Release Generation, to setting Generate.
+
+- Master Files Setting
+	- System Default Settings
+		- Default, ur item.
+		- Settings
+			Click button.
+		- Email, setting ur email setting.
+	- System Setting Work Flow
+		- Asset Work Flow (Asset Location)
+			- List, click item after go to Asset Register to see.
+
+		- Asset Work Flow (Asset Status)
+			- List, click item after go to Asset Register to use Filter to see.
+
+		- PR Approval List (Cost Center)
+		- Purchase Order Work Flow (PO Status)
+		- Contract Work Flow (Contract Status)
+		- Inventory Work Flow (Stock Location)
+
+	- Master User Group
+	- Master Auto Number
+
+- Email Notification
+	- Email Template
+		- Module
+		- Email Template
+		- Description
+		- Event ID
+		- Subject, click Column List
+		- Email Content
+		- Subscriber List
+	
+	- Notification Inbox
+
+- System Administration
+	- Language
+	- Module, setting Sidebar page
+	- Program
+		- Audit Column, click item after go to Asset Register to see.
+	- Data Monitoring
+	- Menu Label Manager
+	- Label
+	- Site
+	- User Login	
+	- Login Session
+	- Assign Site User
+	- User Privilege
+	- Group Privilege Master
+	- Group Privilege Setting
+		- Apply Template	
+	- Create Custom Report
+		- Column List to Sort Column / Criteria Column
+	- Auto Logout
+	- Color Maintenance
+		- change color RGB
+	- Password Policy
+		- Password Aging Interval
+		- Maximum Failed Login Attempts
+		- Mutiple Sessions
+	- Email Log
+	- CFR Data Audit Trail
+
+
+
